@@ -3,7 +3,9 @@ package config
 import (
 	"echo/model"
 	"fmt"
+	"os"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
 	"gorm.io/driver/postgres"
@@ -12,15 +14,17 @@ import (
 	_ "gorm.io/gorm"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "docker"
-	dbname   = "employee"
-)
+// const (
+// 	host     = "localhost"
+// 	port     = 5432
+// 	user     = "postgres"
+// 	password = "docker"
+// 	dbname   = "employee"
+
+// )
 
 var (
+
 	// db  *sql.DB
 	db  *gorm.DB
 	err error
@@ -46,7 +50,20 @@ var (
 
 // func Connect() (*sql.DB, error) {
 func Connect() (*gorm.DB, error) {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	err := godotenv.Load()
+
+	var (
+		host     = os.Getenv("DB_HOST")     //"localhost"
+		port     = os.Getenv("DB_PORT")     //5432
+		user     = os.Getenv("DB_USER")     //"postgres"
+		password = os.Getenv("DB_PASSWORD") //"docker"
+		dbname   = os.Getenv("DB_NAME")     //"employee"
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
