@@ -1,0 +1,45 @@
+basePath: /
+definitions:
+  model.Employee:
+    properties:
+      division:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:9000
+info:
+  contact:
+    email: a@a.com
+    name: a
+  description: Coba coba API Swagger
+  title: API Documentation Employee
+  version: 1.0.0
+paths:
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: Create Employee
+      parameters:
+      - description: Employee
+        in: body
+        name: model.Employee
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Create Employee
+      tags:
+      - Employee
+swagger: "2.0"
